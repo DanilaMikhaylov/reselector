@@ -132,8 +132,10 @@ const getName = ({ rootPath }) => {
   return [rootPath.node.id.name]
 }
 
-const getId = (filename, name) =>
-  hash(`${path.relative(projectPath, filename.toLowerCase())}:${name}`.split(path.sep).join('/')).toString(16)
+const getId = (filename, name) => {
+  const mainRootPath = projectPath.replace(/platform.desktop|platform.touch/gi, '')
+  return hash(`${path.relative(mainRootPath, filename.toLowerCase())}:${name}`.split(path.sep).join('/')).toString(16)
+}
 
 const buildComment = hashmap => `__reselector__start__::${JSON.stringify(hashmap)}::__reselector__end__`
 const getHashmapFromComment = (content) => {
